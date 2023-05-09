@@ -26,6 +26,25 @@ app.get('/store/products', async (req, res) => {
   }
 });
 
+app.get('/store/products/:id', async (req, res) => {
+  try {
+    const response = await axios.get(
+      `${baseUrl}/store/products/${req.params.id}`,
+      {
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+          Authorization: `Bearer ${apiKey}`,
+        },
+      }
+    );
+    res.json(response.data);
+  } catch (error) {
+    console.error('Error fetching product:', error.message);
+    res.status(500).json({ message: 'Error fetching product' });
+  }
+});
+
+
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });
